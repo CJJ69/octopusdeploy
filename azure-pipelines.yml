@@ -1,0 +1,65 @@
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  OSVersion: '1803'
+  ContainerRegistryName: 'cjcreativetech'
+  ServerImageName: 'octopusdeploy'
+  TentacleImageName: 'workertentacle'
+
+jobs:
+- job: OctopusServer
+
+  pool:
+    vmImage: 'win1803'
+
+  steps:
+  - task: Docker@1
+    displayName: 'Build an image'
+    inputs:
+      containerregistrytype: 'Container Registry'
+      dockerRegistryEndpoint: cjcreativetech
+      dockerFile: Server/Dockerfile
+      arguments: '--build-arg SERVERCORE_VERSION=$(OSVersion)'
+      imageName: '$(ContainerRegistryName)/$(ServerImageName):$(OSVersion)'
+      qualifyImageName: false
+      includeLatestTag: true
+
+  - task: Docker@1
+    displayName: 'Push an image'
+    inputs:
+      containerregistrytype: 'Container Registry'
+      dockerRegistryEndpoint: cjcreativetech
+      command: 'Push an image'
+      imageName: '$(ContainerRegistryName)/$(ServerImageName):$(OSVersion)'
+      qualifyImageName: false
+
+- job: Tentacle
+
+  pool:
+    vmImage: 'win1803'
+
+  steps:
+  - task: Docker@1
+    displayName: 'Build an image'
+    inputs:
+      containerregistrytype: 'Container Registry'
+      dockerRegistryEndpoint: cjcreativetech
+      dockerFile: Tentacle/Dockerfile
+      arguments: '--build-arg SERVERCORE_VERSION=$(OSVersion)'
+      imageName: '$(ContainerRegistryName)/$(TentacleImageName):$(OSVersion)'
+      qualifyImageName: false
+      includeLatestTag: true
+
+  - task: Docker@1
+    displayName: 'Push an image'
+    inputs:
+      containerregistrytype: 'Container Registry'
+      dockerRegistryEndpoint: cjcreativetech
+      command: 'Push an image'
+      imageName: '$(ContainerRegistryName)/$(TentacleImageName):$(OSVersion)'
+      qualifyImageName: false
+      
