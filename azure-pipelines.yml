@@ -22,6 +22,8 @@ jobs:
     inputs:
       containerregistrytype: 'Container Registry'
       dockerRegistryEndpoint: cjcreativetech
+      useDefaultContext: false
+      buildContext: /      
       dockerFile: Server/Dockerfile
       arguments: '--build-arg SERVERCORE_VERSION=$(OSVersion)'
       imageName: '$(ContainerRegistryName)/$(ServerImageName):$(OSVersion)'
@@ -48,6 +50,8 @@ jobs:
     inputs:
       containerregistrytype: 'Container Registry'
       dockerRegistryEndpoint: cjcreativetech
+      useDefaultContext: false
+      buildContext: /      
       dockerFile: Tentacle/Dockerfile
       arguments: '--build-arg SERVERCORE_VERSION=$(OSVersion)'
       imageName: '$(ContainerRegistryName)/$(TentacleImageName):$(OSVersion)'
