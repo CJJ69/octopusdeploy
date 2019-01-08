@@ -26,6 +26,7 @@ function Stage-Installer {
     Write-Log "Installer exists!"
   } else {
     Write-Log "Downloading installer '$downloadUrl' to '$MsiPath' ..."
+    [Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
     (New-Object Net.WebClient).DownloadFile($downloadUrl, $MsiPath)
       Write-Log "done."
   }
