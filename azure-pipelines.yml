@@ -1,9 +1,6 @@
 trigger:
 - refs/heads/selfhosted
 
-queue:
-  name: Default
-  
 resources:
 - repo: self
 
@@ -16,6 +13,9 @@ variables:
 jobs:
 - job: OctopusServer
 
+  pool:
+    name: Default
+    
   steps:
   - task: Docker@1
     displayName: 'Build an image'
@@ -41,6 +41,9 @@ jobs:
 
 - job: Tentacle
 
+  pool:
+    name: Default
+    
   steps:
   - task: Docker@1
     displayName: 'Build an image'
