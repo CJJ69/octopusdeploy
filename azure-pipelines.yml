@@ -1,6 +1,9 @@
 trigger:
-- selfhosted
+- refs/heads/selfhosted
 
+queue:
+  name: Default
+  
 resources:
 - repo: self
 
@@ -12,8 +15,6 @@ variables:
 
 jobs:
 - job: OctopusServer
-
-  pool: 'Default'
 
   steps:
   - task: Docker@1
@@ -39,8 +40,6 @@ jobs:
       qualifyImageName: false
 
 - job: Tentacle
-
-  pool: 'Default'
 
   steps:
   - task: Docker@1
