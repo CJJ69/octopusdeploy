@@ -7,7 +7,7 @@ WORKDIR /Scripts
 COPY Server/Scripts/*.* /Scripts/Server/
 
 # add local copy of installers to reduce download
-COPY Server/msi/*.msi /Install/
+#COPY Server/msi/*.msi /Install/
 
 HEALTHCHECK --interval=20s --timeout=20s --retries=6 CMD powershell -file ./Server/healthcheck-server.ps1
 
