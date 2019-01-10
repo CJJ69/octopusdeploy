@@ -99,7 +99,11 @@ function Get-PublicHostName
   elseif ($publicHostNameConfiguration -eq "FQDN")
   {
     $computer = Get-CimInstance win32_computersystem
-    $publicHostName = "$($computer.DNSHostName).$($computer.Domain)"
+    $domain = $computer.Domain
+    $publicHostName = $computer.DNSHostName
+	if ("WORKGROUP" -ne $domain) {
+		$publicHostName += ".$domain"
+	}
   }
   elseif ($publicHostNameConfiguration -eq "ComputerName")
   {
