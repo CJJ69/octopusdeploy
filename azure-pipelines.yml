@@ -6,6 +6,7 @@ resources:
 
 variables:
   OSVersion: 'ltsc2019'
+  OctopusVersion: '2018.11.0'
   ContainerRegistryName: 'cjcreativetech'
   ServerImageName: 'octopusdeploy'
   TentacleImageName: 'workertentacle'
@@ -25,8 +26,8 @@ jobs:
       useDefaultContext: false
       buildContext: ./      
       dockerFile: Server/Dockerfile
-      arguments: '--build-arg SERVERCORE_VERSION=$(OSVersion)'
-      imageName: '$(ContainerRegistryName)/$(ServerImageName):$(OSVersion)'
+      arguments: '--build-arg SERVERCORE_VERSION=$(OSVersion) --build-arg OctopusVersion=$(OctopusVersion)'
+      imageName: '$(ContainerRegistryName)/$(ServerImageName):$(OSVersion)-$(OctopusVersion)'
       qualifyImageName: false
       includeLatestTag: true
 
@@ -36,7 +37,7 @@ jobs:
       containerregistrytype: 'Container Registry'
       dockerRegistryEndpoint: cjcreativetech
       command: 'Push an image'
-      imageName: '$(ContainerRegistryName)/$(ServerImageName):$(OSVersion)'
+      imageName: '$(ContainerRegistryName)/$(ServerImageName):$(OSVersion)-$(OctopusVersion)'
       qualifyImageName: false
 
 - job: Tentacle
