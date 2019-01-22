@@ -26,7 +26,7 @@ jobs:
       useDefaultContext: false
       buildContext: ./      
       dockerFile: Server/Dockerfile
-      arguments: '--build-arg SERVERCORE_VERSION=$(OSVersion)'
+      arguments: '--build-arg SERVERCORE_VERSION=$(OSVersion) --build-arg OctopusVersion=$(OctopusVersion)'
       imageName: '$(ContainerRegistryName)/$(ServerImageName):$(OSVersion)-$(OctopusVersion)'
       qualifyImageName: false
       includeLatestTag: true
