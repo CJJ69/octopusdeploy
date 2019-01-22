@@ -7,7 +7,7 @@ resources:
 variables:
   OSVersion: 'ltsc2019'
   OctopusVersion: '2018.11.0'
-  ContainerRegistryName: 'cjcreativetech'
+  ContainerRegistryName: 'creativedocker'
   ServerImageName: 'octopusdeploy'
   TentacleImageName: 'workertentacle'
 
@@ -22,7 +22,7 @@ jobs:
     displayName: 'Build an image'
     inputs:
       containerregistrytype: 'Container Registry'
-      dockerRegistryEndpoint: cjcreativetech
+      dockerRegistryEndpoint: $(ContainerRegistryName)
       useDefaultContext: false
       buildContext: ./      
       dockerFile: Server/Dockerfile
@@ -35,9 +35,9 @@ jobs:
     displayName: 'Push an image'
     inputs:
       containerregistrytype: 'Container Registry'
-      dockerRegistryEndpoint: cjcreativetech
+      dockerRegistryEndpoint: $(ContainerRegistryName)
       command: 'Push an image'
-      imageName: '$(ContainerRegistryName)/$(ServerImageName):$(OSVersion)-$(OctopusVersion)'
+      imageName: '$(ContainerRegistryName)/$(ServerImageName)'
       qualifyImageName: false
 
 - job: Tentacle
@@ -50,7 +50,7 @@ jobs:
     displayName: 'Build an image'
     inputs:
       containerregistrytype: 'Container Registry'
-      dockerRegistryEndpoint: cjcreativetech
+      dockerRegistryEndpoint: $(ContainerRegistryName)
       useDefaultContext: false
       buildContext: ./      
       dockerFile: Tentacle/Dockerfile
@@ -63,8 +63,8 @@ jobs:
     displayName: 'Push an image'
     inputs:
       containerregistrytype: 'Container Registry'
-      dockerRegistryEndpoint: cjcreativetech
+      dockerRegistryEndpoint: $(ContainerRegistryName)
       command: 'Push an image'
-      imageName: '$(ContainerRegistryName)/$(TentacleImageName):$(OSVersion)'
+      imageName: '$(ContainerRegistryName)/$(TentacleImageName)'
       qualifyImageName: false
       
