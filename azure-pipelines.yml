@@ -6,7 +6,7 @@ resources:
 
 variables:
   OSVersion: 'ltsc2019'
-  OctopusVersion: '2018.11.0'
+  OctopusVersion: '2018.11.3'
   ContainerRegistryName: 'creativedocker'
   ServerImageName: 'octopusdeploy'
   TentacleImageName: 'workertentacle'
