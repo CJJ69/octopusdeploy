@@ -18,6 +18,7 @@ $CustomPublicHostName=$env:CustomPublicHostName;
 $InternalListeningPort=10933;
 $ServerPort=$env:ServerPort;
 $MachinePolicy = $env:MachinePolicy;
+$ResetTrust=$env:ResetTrust;
 
 $TentacleExe=$Exe
 function Configure-Tentacle
@@ -28,6 +29,8 @@ function Configure-Tentacle
     throw "File not found. Expected to find '$TentacleExe' to perform setup."
   }
 
+  $thumbprint = .$TentacleExe @( 'show-thumbprint' )
+  
   Write-Log "Setting directory paths ..."
   Execute-Command $TentacleExe @(
     'configure',
@@ -52,13 +55,20 @@ function Configure-Tentacle
       '--noListen', '"False"')
   }
 
-  Write-Log "Updating trust ..."
-  Execute-Command $TentacleExe @(
-    'configure',
-    '--console',
-    '--instance', 'Tentacle',
-    '--reset-trust')
-
+  if ($ResetTrust) {
+      if ("" -ne $thumbprint) {
+          Write-Log "Existing thumbprint: $thumbprint attempt to Deregister ..."
+          Deregister-Tentacle
+      }
+      
+      Write-Log "Updating trust ..."
+      Execute-Command $TentacleExe @(
+        'configure',
+        '--console',
+        '--instance', 'Tentacle',
+        '--reset-trust')
+  }
+  
   Write-Log "Creating certificate ..."
   Execute-Command $TentacleExe @(
     'new-certificate',
@@ -263,6 +273,45 @@ function Register-Tentacle(){
   # check if Octopus Server available and responding...
   $ServerResponse = Get-ServerResponseIsOK
   Write-Log "Check is server responding: $ServerResponse"
+  Execute-Command $TentacleExe $arg;
+}
+
+function Deregister-Tentacle(){
+ Write-Log "Deregistering with server ..."
+
+  New-Variable -Name arg -Option AllScope
+  if($TargetWorkerPool -ne $null) {
+    $arg = @(
+      'deregister-worker',
+      '--console',
+    '--instance', 'Tentacle',
+    '--server', $ServerUrl,
+    '--force')
+  } else {
+    $arg = @(
+      'deregister-with',
+      '--console',
+    '--instance', 'Tentacle',
+    '--server', $ServerUrl,
+    '--force')
+  }
+
+
+  if(!($ServerApiKey -eq $null)) {
+    Write-Verbose "Deregistering Tentacle with api key"
+    $arg += "--apiKey";
+    $arg += $ServerApiKey
+  } else {
+    Write-Verbose "Deregistering Tentacle with username/password"
+    $arg += "--username";
+    $arg += $ServerUsername
+    $arg += "--password";
+    $arg += $ServerPassword
+  }
+
+  # check if Octopus Server available and responding...
+#  $ServerResponse = Get-ServerResponseIsOK
+#  Write-Log "Check is server responding: $ServerResponse"
   Execute-Command $TentacleExe $arg;
 }
 
