@@ -6,7 +6,8 @@ resources:
 
 variables:
   OSVersion: 'ltsc2019'
-  OctopusVersion: '2018.12.0'
+  OctopusVersion: '2019.1.2'
+  TentacleVersion: '3.25.0'
   ContainerRegistryName: 'creativedocker'
   ServerImageName: 'octopusdeploy'
   TentacleImageName: 'workertentacle'
@@ -54,8 +55,8 @@ jobs:
       useDefaultContext: false
       buildContext: ./      
       dockerFile: Tentacle/Dockerfile
-      arguments: '--build-arg SERVERCORE_VERSION=$(OSVersion)'
-      imageName: '$(ContainerRegistryName)/$(TentacleImageName):$(OSVersion)'
+      arguments: '--build-arg SERVERCORE_VERSION=$(OSVersion) --build-arg TentacleVersion=$(TentacleVersion)'
+      imageName: '$(ContainerRegistryName)/$(TentacleImageName):$(OSVersion)-$(TentacleVersion)'
       qualifyImageName: false
       includeLatestTag: true
 
