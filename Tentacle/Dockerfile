@@ -25,3 +25,4 @@ LABEL   org.label-schema.schema-version="1.0" \
 RUN powershell ./Tentacle/build.ps1 -Verbose
 
 ENTRYPOINT powershell -File ./Tentacle/configure-tentacle.ps1 -Verbose  && powershell -File ./Tentacle/run-tentacle.ps1 -Verbose
+
