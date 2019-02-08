@@ -271,8 +271,8 @@ function Register-Tentacle(){
   }
 
   # check if Octopus Server available and responding...
-  $ServerResponse = Get-ServerResponseIsOK
-  Write-Log "Check is server responding: $ServerResponse"
+#  $ServerResponse = Get-ServerResponseIsOK
+#  Write-Log "Check is server responding: $ServerResponse"
   Execute-Command $TentacleExe $arg;
 }
 
