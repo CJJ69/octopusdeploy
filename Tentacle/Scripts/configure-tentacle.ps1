@@ -194,7 +194,7 @@ function Restore-Configuration() {
 }
 
 function Register-Tentacle(){
- Write-Log "Registering with server ..."
+ Write-Log "Registering with server $ServerUrl ..."
 
   New-Variable -Name arg -Option AllScope
   if($TargetWorkerPool -ne $null) {
