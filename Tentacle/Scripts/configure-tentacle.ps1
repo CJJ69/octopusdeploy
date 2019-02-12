@@ -24,7 +24,9 @@ $TentacleExe=$Exe
 
 function Install-AzureModule
 {
-    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+    Install-PackageProvider NuGet -Force
+    Import-PackageProvider NuGet -Force
+    #Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
     Register-PSRepository -Default -InstallationPolicy Trusted
     Install-Module -Name Az -AllowClobber
     Get-InstalledModule -Name Az -AllVersions | select Name,Version
