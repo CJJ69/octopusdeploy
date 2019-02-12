@@ -21,6 +21,14 @@ $MachinePolicy = $env:MachinePolicy;
 $ResetTrust=$env:ResetTrust;
 
 $TentacleExe=$Exe
+
+function Install-AzureModule
+{
+    Install-Module -Name Az -AllowClobber
+    Get-InstalledModule -Name Az -AllVersions | select Name,Version
+    Enable-AzureRmAlias -Scope CurrentUser
+}
+
 function Configure-Tentacle
 {
   Write-Log "Configure Octopus Deploy Tentacle"
@@ -364,6 +372,9 @@ try
   Validate-Variables
   Write-Log "==============================================="
 
+  # Install Az module
+  Install-AzureModule
+  
   #Restore-Configuration
   Configure-Tentacle
   Register-Tentacle
