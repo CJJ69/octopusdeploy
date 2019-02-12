@@ -23,14 +23,7 @@ function Configure-OctopusDeploy
   Write-Log ""
 }
 
-function Install-AzureModule
-{
-    Install-Module -Name Az -AllowClobber
 
-    Get-InstalledModule -Name Az -AllVersions | select Name,Version
-
-    Enable-AzureRmAlias -Scope CurrentUser
-}
 
 try
 {
@@ -43,8 +36,6 @@ try
   Delete-InstallLocation
 
   "Msi Install complete." | Set-Content "c:\octopus-install.initstate"
-  # Install Az Module
-  Install-AzureModule
   
   Configure-OctopusDeploy
 
