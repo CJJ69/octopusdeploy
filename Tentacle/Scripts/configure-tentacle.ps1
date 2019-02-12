@@ -24,9 +24,12 @@ $TentacleExe=$Exe
 
 function Install-AzureModule
 {
+    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+    Register-PSRepository -Default -InstallationPolicy Trusted
     Install-Module -Name Az -AllowClobber
     Get-InstalledModule -Name Az -AllVersions | select Name,Version
-    Enable-AzureRmAlias -Scope CurrentUser
+    Enable-AzureRmAlias
+    #Enable-AzureRmAlias -Scope CurrentUser
 }
 
 function Configure-Tentacle
