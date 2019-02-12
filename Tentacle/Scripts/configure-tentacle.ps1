@@ -377,15 +377,18 @@ try
   Validate-Variables
   Write-Log "==============================================="
 
-  # Install Az module
-  Install-AzureModule
-  
+
   #Restore-Configuration
   Configure-Tentacle
   Register-Tentacle
   "Configuration complete." | Set-Content "c:\octopus-configuration.initstate"
 
   Write-Log "Configuration successful."
+
+  Write-Log "Install Az module"
+  Install-AzureModule
+  Write-Log "Done"
+
   Write-Log ""
 }
 catch
