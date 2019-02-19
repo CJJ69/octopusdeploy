@@ -198,8 +198,8 @@ function Validate-Variables() {
           '--webapi', 'true')
   }
   
-  $configFile = 'C:\Program Files\Octopus Deploy\Octopus\Octopus.Server.exe.config'
-  ((Get-Content -Path $configFile -raw) -replace "</appSettings", "  <add key=""Halibut.TcpClientPooledConnectionTimeout"" value=""00:00:00""/>`r`n  </appSettings") | Set-Content -Path $configFile
+#  $configFile = 'C:\Program Files\Octopus Deploy\Octopus\Octopus.Server.exe.config'
+#  ((Get-Content -Path $configFile -raw) -replace "</appSettings", "  <add key=""Halibut.TcpClientPooledConnectionTimeout"" value=""00:00:00""/>`r`n  </appSettings") | Set-Content -Path $configFile
 }
 
 
