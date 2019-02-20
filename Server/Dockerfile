@@ -27,6 +27,5 @@ LABEL   org.label-schema.schema-version="1.0" \
     org.label-schema.description="Octopus Deploy Server Instance" \
     org.label-schema.build-date=$BUILD_DATE
 
-
 RUN powershell -File ./Server/build.ps1
 ENTRYPOINT ["/Scripts/Server/entrypoint.bat"]
