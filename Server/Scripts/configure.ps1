@@ -202,7 +202,6 @@ function Validate-Variables() {
 #  ((Get-Content -Path $configFile -raw) -replace "</appSettings", "  <add key=""Halibut.TcpClientPooledConnectionTimeout"" value=""00:00:00""/>`r`n  </appSettings") | Set-Content -Path $configFile
 }
 
-
 function Process-Import() {
   if(Test-Path 'C:\Import\metadata.json' ) {
  
@@ -224,7 +223,7 @@ function Process-Import() {
   }
  }
 
-  function Run-OctopusDeploy
+function Run-OctopusDeploy
 {
 
   Write-Log "Start Octopus Deploy instance ..."
